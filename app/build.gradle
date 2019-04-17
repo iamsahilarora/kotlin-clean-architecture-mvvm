@@ -1,0 +1,102 @@
+buildscript {
+    repositories {
+        jcenter();
+        maven { url "https://maven.google.com" }
+        maven { url 'https://maven.fabric.io/public' }
+        google()
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.28.1'
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.sa.kotlin.cleanarch"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            //  buildConfigField "boolean", "URBAN_AIRSHIP_DEBUG_MODE", "false"
+            minifyEnabled true
+            useProguard true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            //  buildConfigField "boolean", "URBAN_AIRSHIP_DEBUG_MODE", "true"
+            minifyEnabled false
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    dataBinding {
+        enabled = true
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
+
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    //Kotlin support dependencies
+    implementation kotlinDependencies.core
+    implementation kotlinDependencies.coroutinesCore
+    implementation kotlinDependencies.coroutinesAndroid
+
+    // Kotlin Extension for Simplified coding
+    implementation androidxDependencies.ktx
+
+    //Android x design and backward compatibility support dependencies
+    implementation androidxDependencies.appCompat
+    implementation androidxDependencies.constraintlayout
+    implementation androidxDependencies.lifecycleExtention
+    implementation androidxDependencies.recyclerView
+    implementation androidxDependencies.multiDex
+
+    //Google dependencies
+    implementation googleDependencies.material
+    implementation googleDependencies.gson
+
+    // Network Library Retrofit dependencies
+    implementation networkDependencies.retrofit
+    implementation networkDependencies.retrofitGsonConveter
+    implementation networkDependencies.okHttpLogs
+    implementation networkDependencies.kotlinCoroutineAdapterFactory
+    /* UI Related Dependencies */
+    implementation uiDependencies.glide
+
+     /* Koin DI */
+    implementation kotlinDI.core
+    implementation kotlinDI.scope
+    implementation kotlinDI.viewModel
+
+    // Testing Dependencies
+    androidTestImplementation androidxTestingDependencies.archCore
+    androidTestImplementation androidxTestingDependencies.core
+    androidTestImplementation androidxTestingDependencies.contrib
+    androidTestImplementation androidxTestingDependencies.intents
+    androidTestImplementation androidxTestingDependencies.uiAutoMator
+    testImplementation "junit:junit:$junitVersion"
+}
+

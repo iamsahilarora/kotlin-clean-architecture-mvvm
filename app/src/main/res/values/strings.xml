@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">KotlinCleanArch</string>
+    <string name="network_error">Network Error</string>
+    <string name="internal_server_error">Internal Server Error</string>
+    <string name="no_network_error">Please connect to working internet connection</string>
+    <string name="text_okay">OK</string>
+    <string name="text_cancel">Cancel</string>
+
+</resources>
