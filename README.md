@@ -17,8 +17,8 @@ Retorfit2, Koin, Coroutines, AndroidX, Android Jetpack, DataBinding
 ## MVVM (Model View ViewModel Reperesentation) Flow of sample app 
 
 - **View** 
- - >  Request data from viewModel
- - >  Observe viewmodel LiveData for response  
+  - >  Request data from viewModel
+  - >  Observe viewmodel LiveData for response  
 
 
 - **ViewModel**  
