@@ -1,6 +1,6 @@
 package com.sa.kotlin_cleanarch.sample.di.koin
 
-import com.sa.kotlin_cleanarch.sample.model.repo.GlobalRepository
+import com.sa.kotlin_cleanarch.sample.model.repo.PostRepository
 import org.koin.dsl.module
 
 
@@ -11,10 +11,10 @@ import org.koin.dsl.module
 
 val repoModule = module {
 
-    /**Provide GlobalRepository class Singleton object
+    /**Provide PostRepository class Singleton object
      * you can use it any KoinComponent class  below is declaration
-     *  private val globalRepository: GlobalRepository by inject() */
+     *  private val globalRepository: PostRepository by inject() */
 
-    single { GlobalRepository(get(), get()) }
+    single { PostRepository(get(), get(), get()) }
 
 }

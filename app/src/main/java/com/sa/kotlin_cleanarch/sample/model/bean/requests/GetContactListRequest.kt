@@ -3,9 +3,9 @@ package com.sa.kotlin_cleanarch.sample.model.bean.requests
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-class GeneralRequest : Serializable {
+class GetContactListRequest : Serializable {
 
-    @SerializedName("token")
-    var token: String = ""
+    @SerializedName("page")
+    var page: String = ""
 
 }

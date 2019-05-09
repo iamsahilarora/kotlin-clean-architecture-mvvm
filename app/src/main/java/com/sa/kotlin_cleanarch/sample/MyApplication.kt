@@ -4,10 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
-import com.sa.kotlin_cleanarch.sample.di.koin.appModule
-import com.sa.kotlin_cleanarch.sample.di.koin.repoModule
-import com.sa.kotlin_cleanarch.sample.di.koin.splashActivityModule
-import com.sa.kotlin_cleanarch.sample.di.koin.viewModelModule
+import com.sa.kotlin_cleanarch.sample.di.koin.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -37,7 +34,7 @@ class MyApplication : Application(), Application.ActivityLifecycleCallbacks {
 
     /*** function to get all di modules array*/
     private fun getModule(): Iterable<Module> {
-        return listOf(appModule, viewModelModule, repoModule,splashActivityModule)
+        return listOf(appModule, viewModelModule, repoModule,splashActivityModule,databaseModule)
     }
 
     override fun onActivityPaused(activity: Activity?) {

@@ -1,4 +1,4 @@
-package com.sa.kotlin_cleanarch.sample.model.networkCall
+package com.sa.kotlin_cleanarch.sample.model.remote
 
 import com.sa.kotlin_cleanarch.sample.R
 import com.sa.kotlin_cleanarch.sample.MyApplication

@@ -1,4 +1,4 @@
-package com.sa.kotlin_cleanarch.sample.model.preference
+package com.sa.kotlin_cleanarch.sample.model.local.preference
 
 import android.content.SharedPreferences
 
@@ -54,8 +54,6 @@ class PreferenceHelper constructor(private val mSharedPreferences: SharedPrefere
         mSharedPreferences.edit().remove(key).commit()
     }
 
-    fun isTokenAvailable(): Boolean {
-        return !mSharedPreferences.getString(PreferenceConstants.TOKEN, "").isNullOrEmpty()
-    }
+
 
 }

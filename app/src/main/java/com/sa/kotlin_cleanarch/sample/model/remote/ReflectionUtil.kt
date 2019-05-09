@@ -1,4 +1,4 @@
-package com.sa.kotlin_cleanarch.sample.model.networkCall
+package com.sa.kotlin_cleanarch.sample.model.remote
 
 import com.google.gson.Gson
 import java.util.*

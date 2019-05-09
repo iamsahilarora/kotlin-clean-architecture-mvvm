@@ -73,6 +73,9 @@ dependencies {
     implementation androidxDependencies.lifecycleExtention
     implementation androidxDependencies.recyclerView
     implementation androidxDependencies.multiDex
+    implementation androidxDependencies.roomRuntime
+    kapt androidxDependencies.roomCompiler
+
 
     //Google dependencies
     implementation googleDependencies.material

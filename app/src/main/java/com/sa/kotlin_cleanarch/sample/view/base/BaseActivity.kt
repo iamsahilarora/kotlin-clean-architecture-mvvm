@@ -7,7 +7,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
-import com.sa.kotlin_cleanarch.sample.model.preference.PreferenceHelper
+import com.sa.kotlin_cleanarch.sample.model.local.preference.PreferenceHelper
 import com.sa.kotlin_cleanarch.sample.view_model.BaseViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel

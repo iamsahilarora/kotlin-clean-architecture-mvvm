@@ -3,13 +3,11 @@ package com.sa.kotlin_cleanarch.sample.view_model
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.sa.kotlin_cleanarch.sample.MyApplication
-import com.sa.kotlin_cleanarch.sample.model.bean.GlobalSetting
-import com.sa.kotlin_cleanarch.sample.model.bean.requests.GeneralRequest
-import com.sa.kotlin_cleanarch.sample.model.bean.responses.GlobalSettingResponse
-import com.sa.kotlin_cleanarch.sample.model.networkCall.ApiResponse
-import com.sa.kotlin_cleanarch.sample.model.preference.PreferenceConstants
-import com.sa.kotlin_cleanarch.sample.model.preference.PreferenceHelper
-import com.sa.kotlin_cleanarch.sample.model.repo.GlobalRepository
+import com.sa.kotlin_cleanarch.sample.model.bean.requests.GetContactListRequest
+import com.sa.kotlin_cleanarch.sample.model.bean.responses.ContactListResponse
+import com.sa.kotlin_cleanarch.sample.model.remote.ApiResponse
+import com.sa.kotlin_cleanarch.sample.model.local.preference.PreferenceHelper
+import com.sa.kotlin_cleanarch.sample.model.repo.PostRepository
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -17,29 +15,25 @@ import org.koin.core.inject
 /* Created by Sahil Bharti on 5/4/19.
  *
 */
-open class BaseViewModel constructor(app: MyApplication, private val globalRepository: GlobalRepository) :
+open class BaseViewModel constructor(app: MyApplication, private val postRepository: PostRepository) :
     AndroidViewModel(app), KoinComponent {
 
-    private var globalSettingsLiveData = MutableLiveData<ApiResponse<GlobalSettingResponse>>()
+    private var commentListLiveData = MutableLiveData<ApiResponse<ContactListResponse>>()
     private val mPref: PreferenceHelper by inject()
 
 
-    fun getGlobalSettingFromNetwork(generalRequest: GeneralRequest) {
-        globalRepository.getGlobalSettings(generalRequest, globalSettingsLiveData)
+    fun getContactList(getContactListRequest: GetContactListRequest) {
+        postRepository.getCommentList(getContactListRequest, commentListLiveData)
     }
 
-    fun getGlobalSettingResponse(): MutableLiveData<ApiResponse<GlobalSettingResponse>> {
-        return globalSettingsLiveData
-    }
-
-    fun getGlobalSettingsFromPreference(): GlobalSetting {
-        return globalRepository.getGlobalSettingsFromPreference()
+    fun getCommentListResponse(): MutableLiveData<ApiResponse<ContactListResponse>> {
+        return commentListLiveData
     }
 
 
-    fun getGlobalRequest(): GeneralRequest {
-        val request = GeneralRequest()
-        request.token = mPref[PreferenceConstants.TOKEN]
+    fun getCommentList(): GetContactListRequest {
+        val request = GetContactListRequest()
+        request.page = "1"
         return request
     }
 
