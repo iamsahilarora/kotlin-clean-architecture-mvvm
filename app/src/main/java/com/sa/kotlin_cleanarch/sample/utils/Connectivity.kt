@@ -30,7 +30,7 @@ class Connectivity {
             if (context == null)
                 return false
 
-            val info = Connectivity.getNetworkInfo(context)
+            val info = getNetworkInfo(context)
             return info != null && info.isConnected
         }
 
@@ -41,7 +41,7 @@ class Connectivity {
          * @return
          */
         fun isConnectedWifi(context: Context): Boolean {
-            val info = Connectivity.getNetworkInfo(context)
+            val info = getNetworkInfo(context)
             return info != null && info.isConnected && info.type == ConnectivityManager.TYPE_WIFI
         }
 
@@ -52,7 +52,7 @@ class Connectivity {
          * @return
          */
         fun isConnectedMobile(context: Context): Boolean {
-            val info = Connectivity.getNetworkInfo(context)
+            val info = getNetworkInfo(context)
             return info != null && info.isConnected && info.type == ConnectivityManager.TYPE_MOBILE
         }
 
@@ -63,8 +63,8 @@ class Connectivity {
          * @return
          */
         fun isConnectedFast(context: Context): Boolean {
-            val info = Connectivity.getNetworkInfo(context)
-            return info != null && info.isConnected && Connectivity.isConnectionFast(
+            val info = getNetworkInfo(context)
+            return info != null && info.isConnected && isConnectionFast(
                 context, info.type,
                 info.subtype
             )
@@ -77,7 +77,7 @@ class Connectivity {
          * @param subType
          * @return
          */
-        fun isConnectionFast(context: Context, type: Int, subType: Int): Boolean {
+        private fun isConnectionFast(context: Context, type: Int, subType: Int): Boolean {
             if (type == ConnectivityManager.TYPE_WIFI) {
                 val wifiManager = context.getApplicationContext().getSystemService(Context.WIFI_SERVICE) as WifiManager
                 val wifiInfo = wifiManager.connectionInfo

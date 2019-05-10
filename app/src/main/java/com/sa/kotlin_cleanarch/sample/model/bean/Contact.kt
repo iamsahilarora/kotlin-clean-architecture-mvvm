@@ -4,14 +4,15 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import org.koin.core.qualifier.named
 import java.io.Serializable
 
 
 /* Created by Sahil Bharti on 22/1/19.
  *
 */
-@Entity
-data class Contact(@SerializedName("id") @PrimaryKey var id: Int) : Serializable {
+@Entity(tableName = "tb_contact")
+data class Contact(@PrimaryKey var id: Int = 0) : Serializable {
 
 
     @ColumnInfo(name = "first_name")

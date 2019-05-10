@@ -15,7 +15,7 @@ var databaseModule = module {
     /** DB Singleton Provider */
     single {
         Room.databaseBuilder((androidApplication() as MyApplication), AppDB::class.java, "kotlin_sample.db")
-            .fallbackToDestructiveMigration().build();
+            .build()
     }
     single { (get() as AppDB).contactDao() }
 

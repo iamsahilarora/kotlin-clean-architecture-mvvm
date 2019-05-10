@@ -1,5 +1,6 @@
 package com.sa.kotlin_cleanarch.sample.view.splash
 
+import android.app.ProgressDialog
 import android.widget.Toast
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
@@ -9,6 +10,7 @@ import com.sa.kotlin_cleanarch.sample.view.base.BaseActivity
 import com.sa.kotlin_cleanarch.sample.model.bean.responses.ContactListResponse
 import com.sa.kotlin_cleanarch.sample.model.remote.ApiResponse
 import com.sa.kotlin_cleanarch.sample.utils.Connectivity
+import com.sa.kotlin_cleanarch.sample.view.contact.ContactListActivity
 import com.sa.kotlin_cleanarch.sample.view_model.SplashViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -17,9 +19,17 @@ class SplashActivity : BaseActivity() {
 
     private val splashViewMode: SplashViewModel by viewModel()
 
+    private  lateinit var binding:ActivitySplashBinding
+
     private val contactListObserver: Observer<ApiResponse<ContactListResponse>> by lazy {
         Observer<ApiResponse<ContactListResponse>> {
             handleGlobalSettingResponse(it)
+        }
+    }
+
+    private val progressDialog: ProgressDialog by lazy {
+        ProgressDialog(this).apply {
+            setMessage("Loading Please wait...")
         }
     }
 
@@ -28,7 +38,8 @@ class SplashActivity : BaseActivity() {
     }
 
     override fun initUI(binding: ViewDataBinding?) {
-        (binding as ActivitySplashBinding).activity=this
+        this.binding =binding as ActivitySplashBinding
+        binding.activity = this
     }
 
     fun getContactList() {
@@ -49,24 +60,29 @@ class SplashActivity : BaseActivity() {
     }
 
     /* Response Handlers */
-    private fun handleGlobalSettingResponse(it: ApiResponse<ContactListResponse>) {
-        when (it.status) {
+    private fun handleGlobalSettingResponse(response: ApiResponse<ContactListResponse>) {
+        when (response.status) {
             ApiResponse.Status.LOADING -> {
-                //todo Show progress
+                progressDialog.show()
             }
             ApiResponse.Status.SUCCESS -> {
-                /*** todo Hide progress and  handle Success*/
-                moveToNextScreen()
+                progressDialog.dismiss()
+                moveToNextScreen(response.data)
             }
             ApiResponse.Status.ERROR -> {
-                /*** todo Hide Progress and Handle Error */
-                Toast.makeText(this, it.errorMessage.toString(), Toast.LENGTH_LONG).show()
-                finish()
+                progressDialog.dismiss()
+                Toast.makeText(this, response.errorMessage.toString(), Toast.LENGTH_LONG).show()
             }
         }
     }
 
-    private fun moveToNextScreen() {
+    private fun moveToNextScreen(data: ContactListResponse?) {
+
+        if (data?.data != null) {
+            ContactListActivity.open(this, data?.data!!)
+        } else {
+            ContactListActivity.open(this, ArrayList())
+        }
 
     }
 

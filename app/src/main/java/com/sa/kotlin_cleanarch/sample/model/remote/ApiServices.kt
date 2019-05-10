@@ -11,9 +11,9 @@ import retrofit2.http.*
 interface ApiServices {
 
 
-    @FormUrlEncoded
+
     @GET(ApiConstant.GET_CONTACTS)
-    fun getPostCommentsAsync(@QueryMap params: HashMap<String, String>): Deferred<Response<ContactListResponse>>
+    fun getContactsAsync(@QueryMap params: HashMap<String, String>): Deferred<Response<ContactListResponse>>
 
 
 }

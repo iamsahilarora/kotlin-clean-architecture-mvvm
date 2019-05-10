@@ -4,7 +4,7 @@
     <data>
         <variable name="activity" type="com.sa.kotlin_cleanarch.sample.view.splash.SplashActivity"></variable>
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent" android:id="@+id/frameLayout">
 
@@ -12,8 +12,9 @@
                 android:onClick="@{()->activity.getContactList()}"
                 android:text="Get Contact List"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/button"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="304dp" android:layout_marginStart="160dp"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="wrap_content"
+                android:id="@+id/button"
+                android:layout_centerInParent="true"
+        />
+    </RelativeLayout>
 </layout>

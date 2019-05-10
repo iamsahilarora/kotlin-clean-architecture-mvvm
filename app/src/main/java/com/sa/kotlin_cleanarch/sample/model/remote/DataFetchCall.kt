@@ -49,6 +49,7 @@ abstract class DataFetchCall<ResultType>(private val responseLiveData: MutableLi
                         responseLiveData.postValue(ApiResponse.error(Throwable(response.message())))
                     }
                 } catch (exception: Exception) {
+                    exception.printStackTrace()
                     responseLiveData.postValue(ApiResponse.error(exception))
                 }
             }

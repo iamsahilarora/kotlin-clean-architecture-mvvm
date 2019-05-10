@@ -16,14 +16,14 @@ import com.sa.kotlin_cleanarch.sample.model.bean.Contact
 interface ContactDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(contact: Contact)
+    fun insertContact(contact: Contact)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(contacts: ArrayList<Contact>)
+    fun insertAllContacts(contacts: List<Contact>)
 
-    @Query("SELECT * FROM Contact WHERE id = :id LIMIT 1")
-    fun retrieve(id: Int): LiveData<Contact>
+    @Query("SELECT * FROM tb_contact WHERE id = :id LIMIT 1")
+    fun retrieve(id: Int): Contact
 
-    @Query("SELECT * FROM Contact")
-    fun retrieveAllContact(): LiveData<List<Contact>>
+    @Query("SELECT * FROM tb_contact")
+    fun retrieveAllContact(): List<Contact>
 }

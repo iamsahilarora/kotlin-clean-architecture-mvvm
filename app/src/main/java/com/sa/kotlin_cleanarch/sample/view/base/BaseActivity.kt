@@ -30,7 +30,6 @@ abstract class BaseActivity : AppCompatActivity(), BaseInterFace, LifecycleOwner
         super.onCreate(savedInstanceState)
         val layoutIdRes = layout
         if (layoutIdRes != 0) {
-            setContentView(layoutIdRes)
             val binding = DataBindingUtil.setContentView(this, layoutIdRes) as ViewDataBinding
             initUI(binding)
         }

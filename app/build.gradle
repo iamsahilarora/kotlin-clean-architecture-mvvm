@@ -88,8 +88,9 @@ dependencies {
     implementation networkDependencies.kotlinCoroutineAdapterFactory
     /* UI Related Dependencies */
     implementation uiDependencies.glide
+    implementation 'com.facebook.stetho:stetho:1.5.1'
 
-     /* Koin DI */
+    /* Koin DI */
     implementation kotlinDI.core
     implementation kotlinDI.scope
     implementation kotlinDI.viewModel

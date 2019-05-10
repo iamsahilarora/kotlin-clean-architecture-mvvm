@@ -1,9 +1,6 @@
 package com.sa.kotlin_cleanarch.sample.model.repo
 
-import androidx.arch.core.util.Function
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.sa.kotlin_cleanarch.sample.model.bean.Contact
 import com.sa.kotlin_cleanarch.sample.model.bean.requests.GetContactListRequest
 import com.sa.kotlin_cleanarch.sample.model.bean.responses.ContactListResponse
@@ -17,7 +14,7 @@ import org.koin.core.inject
 import retrofit2.Response
 
 
-class PostRepository constructor(
+class ContactRepository constructor(
     private val apiServices: ApiServices,
     private val preferences: PreferenceHelper,
     private val contactDao: ContactDao
@@ -47,7 +44,7 @@ class PostRepository constructor(
             /*** called when shouldFetchFromDB is true */
             override fun loadFromDB(): ContactListResponse? {
                 return ContactListResponse().apply {
-                    data = contactDao.retrieveAllContact().value as? ArrayList<Contact>
+                    data = contactDao.retrieveAllContact() as? ArrayList<Contact>
                 }
 
                 //todo  fetch data from DB and post to live Data
@@ -55,12 +52,13 @@ class PostRepository constructor(
 
             /*** called when shouldFetchFromDB is false */
             override fun createCallAsync(): Deferred<Response<ContactListResponse>> {
-                return apiServices.getPostCommentsAsync(reflectionUtil.convertPojoToMap(getContactListRequest))
+                return apiServices.getContactsAsync(reflectionUtil.convertPojoToMap(getContactListRequest))
             }
 
             /***  called when  API Response is success and before post response to livedata */
             override fun saveResult(result: ContactListResponse) {
                 result.data?.run {
+                    forEach { contactDao.insertContact(it) }
                     preferences.put(PreferenceConstants.IS_CONTACT_SAVED_TO_DB, true)
                 }
             }

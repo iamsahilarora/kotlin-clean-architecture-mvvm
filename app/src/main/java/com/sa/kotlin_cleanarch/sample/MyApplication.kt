@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
+import com.facebook.stetho.Stetho
 import com.sa.kotlin_cleanarch.sample.di.koin.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -23,6 +24,7 @@ class MyApplication : Application(), Application.ActivityLifecycleCallbacks {
     override fun onCreate() {
         super.onCreate()
         context = this
+        Stetho.initializeWithDefaults(this)
         /*** start Koin DI  */
         startKoin {
             androidLogger()
@@ -34,7 +36,7 @@ class MyApplication : Application(), Application.ActivityLifecycleCallbacks {
 
     /*** function to get all di modules array*/
     private fun getModule(): Iterable<Module> {
-        return listOf(appModule, viewModelModule, repoModule,splashActivityModule,databaseModule)
+        return listOf(appModule, viewModelModule,databaseModule, repoModule,splashActivityModule)
     }
 
     override fun onActivityPaused(activity: Activity?) {
