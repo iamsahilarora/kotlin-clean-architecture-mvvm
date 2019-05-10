@@ -4,8 +4,8 @@ Retorfit2, Koin, Coroutines, AndroidX, Android Jetpack, DataBinding
 
 #### The app has following packages:
 
- - **config:** App Configuration Constants Files 
- - **di:** Dependencies Provider Classes using **Koin**
+ - **config:** its include App Configuration Constants Files 
+ - **di:** its include Dependencies Injections Modules using **Koin**
  - **model:** its include given sub modules 
    - > **local :** its include Room DB Dao,Entities and Shared Preferences Classes  
    - > **remote :** its include Network Call classes like APIConstants,ApiServices using **Retrofit**    
