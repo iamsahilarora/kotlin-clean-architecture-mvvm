@@ -7,10 +7,10 @@ Retorfit2, Koin, Coroutines, AndroidX, Android Jetpack, DataBinding
  - **config:** App Configuration Constants Files 
  - **di:** Dependencies Provider Classes using **Koin**
  - **model:** its include given sub modules 
-   -> **local :** its include Room DB Dao,Entities and Shared Preferences Classes  
-   -> **remote :** its include Network Call classes like APIConstants,ApiServices using **Retrofit**    
-   -> **repo :** its include all repository classes which handle the data requests coming from viewmodels      
-   -> **beans :** its include all data classes,models and room db entities used in application
+   - > **local :** its include Room DB Dao,Entities and Shared Preferences Classes  
+   - > **remote :** its include Network Call classes like APIConstants,ApiServices using **Retrofit**    
+   - > **repo :** its include all repository classes which handle the data requests coming from viewmodels      
+   - > **beans :** its include all data classes,models and room db entities used in application
  - **utils:** Utilities Classes 
  - **view:** View Classes Fragments/Activities/Adapters 
  - **view_model:** ViewModels Classes that provide data to View 
