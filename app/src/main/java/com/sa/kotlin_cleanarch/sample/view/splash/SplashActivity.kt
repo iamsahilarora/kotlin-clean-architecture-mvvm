@@ -54,7 +54,7 @@ class SplashActivity : BaseActivity() {
             /*** request viewModel to get data ***/
             splashViewMode.getContactList(splashViewMode.createContactRequest())
             /*** observe live data of viewModel*/
-            splashViewMode.commentListResponse.observe(this, contactListObserver)
+            splashViewMode.getCommentListResponse().observe(this, contactListObserver)
         } else {
             Toast.makeText(this, resources.getString(R.string.no_network_error), Toast.LENGTH_LONG).show()
             finish()
