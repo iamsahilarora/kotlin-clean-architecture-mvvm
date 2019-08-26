@@ -4,17 +4,20 @@ import androidx.lifecycle.MutableLiveData
 import com.sa.kotlin_cleanarch.sample.model.bean.Contact
 import com.sa.kotlin_cleanarch.sample.model.bean.requests.GetContactListRequest
 import com.sa.kotlin_cleanarch.sample.model.bean.responses.ContactListResponse
-import com.sa.kotlin_cleanarch.sample.model.remote.*
 import com.sa.kotlin_cleanarch.sample.model.local.preference.PreferenceConstants
 import com.sa.kotlin_cleanarch.sample.model.local.preference.PreferenceHelper
 import com.sa.kotlin_cleanarch.sample.model.local.room_db.dao.ContactDao
+import com.sa.kotlin_cleanarch.sample.model.remote.ApiResponse
+import com.sa.kotlin_cleanarch.sample.model.remote.ApiServices
+import com.sa.kotlin_cleanarch.sample.model.remote.DataFetchCall
+import com.sa.kotlin_cleanarch.sample.model.remote.ReflectionUtil
 import kotlinx.coroutines.Deferred
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import retrofit2.Response
 
 
-class ContactRepository constructor(
+class ContactRepository(
     private val apiServices: ApiServices,
     private val preferences: PreferenceHelper,
     private val contactDao: ContactDao
@@ -52,7 +55,11 @@ class ContactRepository constructor(
 
             /*** called when shouldFetchFromDB is false */
             override fun createCallAsync(): Deferred<Response<ContactListResponse>> {
-                return apiServices.getContactsAsync(reflectionUtil.convertPojoToMap(getContactListRequest))
+                return apiServices.getContactsAsync(
+                    reflectionUtil.convertPojoToMap(
+                        getContactListRequest
+                    )
+                )
             }
 
             /***  called when  API Response is success and before post response to livedata */

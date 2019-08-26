@@ -10,8 +10,8 @@ import retrofit2.Response
 import java.lang.Exception
 
 
-/* Created by Sahil Bharti on 21/1/19.
- *
+/** Created by Sahil Bharti on 21/1/19.
+ * Copyright (c) 2019 Sahil Inc. All rights reserved.
 */
 abstract class DataFetchCall<ResultType>(private val responseLiveData: MutableLiveData<ApiResponse<ResultType>>) {
 
@@ -42,7 +42,7 @@ abstract class DataFetchCall<ResultType>(private val responseLiveData: MutableLi
                 try {
                     val request = createCallAsync()
                     val response = request.await()
-                    if (response?.body() != null) {
+                    if (response.body() != null) {
                         saveResult(response.body()!!)
                         responseLiveData.postValue(ApiResponse.success(response.body()!!))
                     } else {

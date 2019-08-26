@@ -7,8 +7,9 @@ import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
 
-/* Created by Sahil Bharti on 2/5/19.
+/** Created by Sahil Bharti on 2/5/19.
  *
+ *  Copyright (c) 2019 Sahil Inc. All rights reserved.
 */
 var databaseModule = module {
 

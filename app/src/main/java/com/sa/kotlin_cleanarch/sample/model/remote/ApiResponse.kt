@@ -7,7 +7,7 @@ import java.net.SocketTimeoutException
 /* Created by Sahil Bharti on 9/1/19.
 **/
 
-class ApiResponse<T>(val status: Status, val data: T?, val error: Throwable?) {
+class ApiResponse<T>(val status: Status, val data: T?, private val error: Throwable?) {
 
     var errorMessage: String? = null
     var errorType: Error? = null

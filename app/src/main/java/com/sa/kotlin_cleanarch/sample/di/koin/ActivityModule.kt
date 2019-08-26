@@ -5,8 +5,10 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 
-/* Created by Sahil Bharti on 5/4/19.
+/**
+ *  Created by Sahil Bharti on 5/4/19.
  *
+ *  Copyright (c) 2019 Sahil Inc. All rights reserved.
 */
 
 var splashActivityModule = module {

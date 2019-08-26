@@ -6,11 +6,11 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.sa.kotlin_cleanarch.sample.MyApplication
+import com.sa.kotlin_cleanarch.sample.model.local.preference.PreferenceConstants
+import com.sa.kotlin_cleanarch.sample.model.local.preference.PreferenceHelper
 import com.sa.kotlin_cleanarch.sample.model.remote.ApiConstant
 import com.sa.kotlin_cleanarch.sample.model.remote.ApiServices
 import com.sa.kotlin_cleanarch.sample.model.remote.ReflectionUtil
-import com.sa.kotlin_cleanarch.sample.model.local.preference.PreferenceConstants
-import com.sa.kotlin_cleanarch.sample.model.local.preference.PreferenceHelper
 import com.sa.kotlin_cleanarch.sample.utils.validations.ValidationHelper
 import com.sa.kotlin_cleanarch.sample.utils.validations.Validator
 import okhttp3.OkHttpClient
@@ -22,8 +22,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 
-/* Created by Sahil Bharti on 5/4/19.
+/** Created by Sahil Bharti on 5/4/19.
  *
+ *  Copyright (c) 2019 Sahil Inc. All rights reserved.
 */
 val appModule = module {
 

@@ -1,15 +1,15 @@
 package com.sa.kotlin_cleanarch.sample.di.koin
 
 
-import com.sa.kotlin_cleanarch.sample.MyApplication
-import com.sa.kotlin_cleanarch.sample.view_model.*
-import org.koin.android.ext.koin.androidApplication
+import com.sa.kotlin_cleanarch.sample.view_model.BaseViewModel
+import com.sa.kotlin_cleanarch.sample.view_model.SplashViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 
-/* Created by Sahil Bharti on 5/4/19.
+/** Created by Sahil Bharti on 5/4/19.
  *
+ * Copyright (c) 2019 Sahil Inc. All rights reserved.
 */
 
 val viewModelModule = module {
@@ -27,6 +27,6 @@ val viewModelModule = module {
      *  private val baseViewModel: BaseViewModel by sharedViewmodel()
      *  */
 
-    viewModel { BaseViewModel(androidApplication() as MyApplication, get()) }
-    viewModel { SplashViewModel(androidApplication() as MyApplication, get()) }
+    viewModel { BaseViewModel() }
+    viewModel { SplashViewModel(get()) }
 }

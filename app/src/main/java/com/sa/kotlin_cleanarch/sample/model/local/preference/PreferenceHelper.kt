@@ -11,27 +11,27 @@ class PreferenceHelper constructor(private val mSharedPreferences: SharedPrefere
 
 
     fun put(key: String, value: String) {
-        mSharedPreferences.edit().putString(key, value).commit()
+        mSharedPreferences.edit().putString(key, value).apply()
     }
 
     fun put(key: String, value: Int) {
-        mSharedPreferences.edit().putInt(key, value).commit()
+        mSharedPreferences.edit().putInt(key, value).apply()
     }
 
     fun put(key: String, value: Long) {
-        mSharedPreferences.edit().putLong(key, value).commit()
+        mSharedPreferences.edit().putLong(key, value).apply()
     }
 
     fun put(key: String, value: Float) {
-        mSharedPreferences.edit().putFloat(key, value).commit()
+        mSharedPreferences.edit().putFloat(key, value).apply()
     }
 
     fun put(key: String, value: Boolean) {
-        mSharedPreferences.edit().putBoolean(key, value).commit()
+        mSharedPreferences.edit().putBoolean(key, value).apply()
     }
 
     operator fun get(key: String): String {
-        return mSharedPreferences.getString(key, "").toString()
+        return mSharedPreferences.getString(key, "")?:""
     }
 
     operator fun get(key: String, defaultValue: Int): Int? {
@@ -51,7 +51,7 @@ class PreferenceHelper constructor(private val mSharedPreferences: SharedPrefere
     }
 
     fun deleteSavedData(key: String) {
-        mSharedPreferences.edit().remove(key).commit()
+        mSharedPreferences.edit().remove(key).apply()
     }
 
 

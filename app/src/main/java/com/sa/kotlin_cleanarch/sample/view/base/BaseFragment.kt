@@ -14,8 +14,6 @@ import androidx.fragment.app.Fragment
 abstract class BaseFragment : Fragment() {
 
     private lateinit var binding: ViewDataBinding
-    private lateinit var activity: Activity
-    private lateinit var fragmentListener: OnFragmentListener
 
     abstract fun getLayoutId(): Int
 
@@ -38,13 +36,4 @@ abstract class BaseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onAttach(context: Context?) {
-        if (context is Activity)
-            activity = context
-
-        if (context is OnFragmentListener)
-            fragmentListener = context
-
-        super.onAttach(context)
-    }
 }
