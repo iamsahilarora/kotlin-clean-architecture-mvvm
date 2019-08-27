@@ -17,7 +17,7 @@ import com.sa.kotlin_cleanarch.sample.view_model.SplashViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class SplashActivity : BaseActivity() {
+class SplashActivity : BaseActivity() ,ContactsInteractor{
 
     private val splashViewMode: SplashViewModel by viewModel()
 
@@ -41,10 +41,10 @@ class SplashActivity : BaseActivity() {
 
     override fun initUI(binding: ViewDataBinding?) {
         this.binding =binding as ActivitySplashBinding
-        binding.activity = this
+        binding.contactInteract = this
     }
 
-    fun getContactList() {
+    override fun getContactList() {
         hitGetContactListAPI()
 
     }

@@ -2,14 +2,17 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <variable name="activity" type="com.sa.kotlin_cleanarch.sample.view.splash.SplashActivity"></variable>
+
+        <variable
+                name="contactInteract"
+                type="com.sa.kotlin_cleanarch.sample.view.splash.ContactsInteractor" />
     </data>
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent" android:id="@+id/frameLayout">
 
         <Button
-                android:onClick="@{()->activity.getContactList()}"
+                android:onClick="@{()->contactInteract.getContactList()}"
                 android:text="Get Contact List"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
