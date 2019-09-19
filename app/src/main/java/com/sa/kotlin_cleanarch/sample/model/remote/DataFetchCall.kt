@@ -1,6 +1,5 @@
 package com.sa.kotlin_cleanarch.sample.model.remote
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
@@ -12,7 +11,7 @@ import java.lang.Exception
 
 /** Created by Sahil Bharti on 21/1/19.
  * Copyright (c) 2019 Sahil Inc. All rights reserved.
-*/
+ */
 abstract class DataFetchCall<ResultType>(private val responseLiveData: MutableLiveData<ApiResponse<ResultType>>) {
 
 
@@ -32,9 +31,23 @@ abstract class DataFetchCall<ResultType>(private val responseLiveData: MutableLi
                         saveResult(response)
                         responseLiveData.postValue(ApiResponse.success(response))
                     } else
-                        responseLiveData.postValue(ApiResponse.error(Throwable("Error")))
+                        responseLiveData.postValue(
+                            ApiResponse.error(
+                                ApiResponse.ApiError(
+                                    404,
+                                    "Not Found"
+                                )
+                            )
+                        )
                 } catch (exception: Exception) {
-                    responseLiveData.postValue(ApiResponse.error(exception))
+                    responseLiveData.postValue(
+                        ApiResponse.error(
+                            ApiResponse.ApiError(
+                                404,
+                                exception.message.toString()
+                            )
+                        )
+                    )
                 }
             }
         } else {
@@ -46,11 +59,26 @@ abstract class DataFetchCall<ResultType>(private val responseLiveData: MutableLi
                         saveResult(response.body()!!)
                         responseLiveData.postValue(ApiResponse.success(response.body()!!))
                     } else {
-                        responseLiveData.postValue(ApiResponse.error(Throwable(response.message())))
+                        responseLiveData.postValue(
+                            ApiResponse.error(
+                                ApiResponse.ApiError(
+                                    response.code(),
+                                    response.message(),
+                                    response.errorBody().toString()
+                                )
+                            )
+                        )
                     }
                 } catch (exception: Exception) {
                     exception.printStackTrace()
-                    responseLiveData.postValue(ApiResponse.error(exception))
+                    responseLiveData.postValue(
+                        ApiResponse.error(
+                            ApiResponse.ApiError(
+                                500,
+                                exception.message.toString()
+                            )
+                        )
+                    )
                 }
             }
         }

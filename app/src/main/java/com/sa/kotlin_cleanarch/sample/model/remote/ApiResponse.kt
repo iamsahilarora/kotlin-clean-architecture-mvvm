@@ -1,28 +1,10 @@
 package com.sa.kotlin_cleanarch.sample.model.remote
 
-import com.sa.kotlin_cleanarch.sample.R
-import com.sa.kotlin_cleanarch.sample.MyApplication
-import java.net.SocketTimeoutException
-
 /* Created by Sahil Bharti on 9/1/19.
 **/
 
-class ApiResponse<T>(val status: Status, val data: T?, private val error: Throwable?) {
+class ApiResponse<T>(val status: Status, val data: T?, val error: ApiError?) {
 
-    var errorMessage: String? = null
-    var errorType: Error? = null
-
-    init {
-        if (error == null && status == Status.ERROR) {
-            errorType = Error.API_ERROR
-        } else if (error is SocketTimeoutException) {
-            errorType = Error.TIMEOUT_ERROR
-            errorMessage = MyApplication.context.getString(R.string.network_error)
-        } else {
-            errorType = Error.SERVER_ERROR
-            errorMessage = MyApplication.context.getString(R.string.internal_server_error)
-        }
-    }
 
     companion object {
         fun <T> loading(): ApiResponse<T> {
@@ -41,7 +23,7 @@ class ApiResponse<T>(val status: Status, val data: T?, private val error: Throwa
             )
         }
 
-        fun <T> error(error: Throwable?): ApiResponse<T> {
+        fun <T> error(error: ApiError?): ApiResponse<T> {
             return ApiResponse(
                 Status.ERROR,
                 null,
@@ -56,10 +38,9 @@ class ApiResponse<T>(val status: Status, val data: T?, private val error: Throwa
         ERROR,
     }
 
-    enum class Error {
-        SERVER_ERROR,
-        TIMEOUT_ERROR,
-        API_ERROR
+
+
+    class ApiError(val code: Int, val message: String, errorBody: String="") {
 
     }
 }

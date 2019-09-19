@@ -1,7 +1,6 @@
 package com.sa.kotlin_cleanarch.sample.view.splash
 
 
-
 import android.app.ProgressDialog
 import android.widget.Toast
 import androidx.databinding.ViewDataBinding
@@ -17,11 +16,11 @@ import com.sa.kotlin_cleanarch.sample.view_model.SplashViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class SplashActivity : BaseActivity() ,ContactsInteractor{
+class SplashActivity : BaseActivity(), ContactsInteractor {
 
     private val splashViewMode: SplashViewModel by viewModel()
 
-    private  lateinit var binding:ActivitySplashBinding
+    private lateinit var binding: ActivitySplashBinding
 
     private val contactListObserver: Observer<ApiResponse<ContactListResponse>> by lazy {
         Observer<ApiResponse<ContactListResponse>> {
@@ -40,7 +39,7 @@ class SplashActivity : BaseActivity() ,ContactsInteractor{
     }
 
     override fun initUI(binding: ViewDataBinding?) {
-        this.binding =binding as ActivitySplashBinding
+        this.binding = binding as ActivitySplashBinding
         binding.contactInteract = this
     }
 
@@ -56,7 +55,8 @@ class SplashActivity : BaseActivity() ,ContactsInteractor{
             /*** observe live data of viewModel*/
             splashViewMode.getCommentListResponse().observe(this, contactListObserver)
         } else {
-            Toast.makeText(this, resources.getString(R.string.no_network_error), Toast.LENGTH_LONG).show()
+            Toast.makeText(this, resources.getString(R.string.no_network_error), Toast.LENGTH_LONG)
+                .show()
             finish()
         }
     }
@@ -73,7 +73,15 @@ class SplashActivity : BaseActivity() ,ContactsInteractor{
             }
             ApiResponse.Status.ERROR -> {
                 progressDialog.dismiss()
-                Toast.makeText(this, response.errorMessage.toString(), Toast.LENGTH_LONG).show()
+                if (response.error?.code == 500)
+                    Toast.makeText(this, response.error?.message, Toast.LENGTH_LONG).show()
+                else
+                    Toast.makeText(
+                        this,
+                        getString(R.string.internal_server_error),
+                        Toast.LENGTH_LONG
+                    ).show()
+
             }
         }
     }
