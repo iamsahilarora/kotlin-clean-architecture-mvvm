@@ -27,6 +27,23 @@ class ContactRepository(
      * used to convert  request Model class to HashMap */
     private val reflectionUtil: ReflectionUtil by inject()
 
+    fun getCommentListFromNetwork(
+        getContactListRequest: GetContactListRequest,
+        contactListResponse: MutableLiveData<ApiResponse<ContactListResponse>>) {
+        object : DataFetchCall<ContactListResponse>(contactListResponse) {
+            override suspend fun createCallAsync(): Response<ContactListResponse> {
+                return apiServices.getContactsAsync(
+                    reflectionUtil.convertPojoToMap(
+                        getContactListRequest
+                    )
+                )
+            }
+            /*** override  saveResult() ro Save Api Response */
+            /*** override  loadFromDb() & shouldLoadFromDB() to Load Data from DB not from Network */
+        }.execute()
+    }
+
+
     /** function to get CommentList data Request
      * params* 1. GetContactListRequest is requestDataModel
      * params* 2.LiveData of Response DataModel
@@ -38,7 +55,6 @@ class ContactRepository(
     ) {
         object : DataFetchCall<ContactListResponse>(contactListResponse) {
 
-
             /*** if return true loadFromDB called else createCallAsync is called */
             override fun shouldFetchFromDB(): Boolean {
                 return preferences.getBoolean(PreferenceConstants.IS_CONTACT_SAVED_TO_DB)
@@ -49,12 +65,11 @@ class ContactRepository(
                 return ContactListResponse().apply {
                     data = contactDao.retrieveAllContact() as? ArrayList<Contact>
                 }
-
                 //todo  fetch data from DB and post to live Data
             }
 
             /*** called when shouldFetchFromDB is false */
-            override fun createCallAsync(): Deferred<Response<ContactListResponse>> {
+            override suspend fun createCallAsync(): Response<ContactListResponse> {
                 return apiServices.getContactsAsync(
                     reflectionUtil.convertPojoToMap(
                         getContactListRequest

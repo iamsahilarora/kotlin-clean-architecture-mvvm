@@ -1,7 +1,7 @@
 package com.sa.kotlin_cleanarch.sample.model.remote
 
-import com.sa.kotlin_cleanarch.sample.model.bean.responses.*
-import kotlinx.coroutines.Deferred
+
+import com.sa.kotlin_cleanarch.sample.model.bean.responses.ContactListResponse
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -11,9 +11,8 @@ import retrofit2.http.*
 interface ApiServices {
 
 
-
     @GET(ApiConstant.GET_CONTACTS)
-    fun getContactsAsync(@QueryMap params: HashMap<String, String>): Deferred<Response<ContactListResponse>>
+    suspend fun getContactsAsync(@QueryMap params: HashMap<String, String>): Response<ContactListResponse>
 
 
 }

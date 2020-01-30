@@ -14,72 +14,75 @@ import java.lang.Exception
  */
 abstract class DataFetchCall<ResultType>(private val responseLiveData: MutableLiveData<ApiResponse<ResultType>>) {
 
-
-    abstract fun createCallAsync(): Deferred<Response<ResultType>>
-    abstract fun saveResult(result: ResultType)
-    abstract fun shouldFetchFromDB(): Boolean
-    abstract fun loadFromDB(): ResultType?
+    abstract suspend fun createCallAsync(): Response<ResultType>
+    open fun saveResult(result: ResultType) {}
+    open fun shouldFetchFromDB(): Boolean = false
+    open fun loadFromDB(): ResultType? = null
 
     fun execute() {
         responseLiveData.postValue(ApiResponse.loading())
         if (shouldFetchFromDB()) {
-            GlobalScope.launch {
-                try {
-                    val request = async { return@async loadFromDB() }
-                    val response = request.await()
-                    if (response != null) {
-                        saveResult(response)
-                        responseLiveData.postValue(ApiResponse.success(response))
-                    } else
-                        responseLiveData.postValue(
-                            ApiResponse.error(
-                                ApiResponse.ApiError(
-                                    404,
-                                    "Not Found"
-                                )
+            callLoadFromDB()
+        } else {
+            callNetworkData()
+        }
+    }
+
+    private fun callNetworkData() {
+        GlobalScope.launch {
+            try {
+                val request = createCallAsync()
+                if (request.isSuccessful) {
+                    if (request.body() != null)
+                        saveResult(request.body()!!)
+                    responseLiveData.postValue(ApiResponse.success(request.body()!!))
+                } else {
+                    responseLiveData.postValue(
+                        ApiResponse.error(
+                            ApiResponse.ApiError(
+                                request.code(),
+                                request.message(),
+                                request.errorBody().toString()
                             )
                         )
-                } catch (exception: Exception) {
+                    )
+                }
+            } catch (exception: Exception) {
+                exception.printStackTrace()
+                responseLiveData.postValue(
+                    ApiResponse.error(
+                        ApiResponse.ApiError(
+                            500,
+                            exception.message.toString()
+                        )
+                    )
+                )
+            }
+        }
+    }
+
+    private fun callLoadFromDB() {
+        GlobalScope.launch {
+            try {
+                val response = loadFromDB()
+                if (response != null) {
+                    saveResult(response)
+                    responseLiveData.postValue(ApiResponse.success(response))
+                } else
                     responseLiveData.postValue(
                         ApiResponse.error(
                             ApiResponse.ApiError(
                                 404,
-                                exception.message.toString()
+                                "Not Found"
                             )
                         )
                     )
-                }
-            }
-        } else {
-            GlobalScope.launch {
-                try {
-                    val request = createCallAsync()
-                    val response = request.await()
-                    if (response.body() != null) {
-                        saveResult(response.body()!!)
-                        responseLiveData.postValue(ApiResponse.success(response.body()!!))
-                    } else {
-                        responseLiveData.postValue(
-                            ApiResponse.error(
-                                ApiResponse.ApiError(
-                                    response.code(),
-                                    response.message(),
-                                    response.errorBody().toString()
-                                )
-                            )
-                        )
-                    }
-                } catch (exception: Exception) {
-                    exception.printStackTrace()
-                    responseLiveData.postValue(
-                        ApiResponse.error(
-                            ApiResponse.ApiError(
-                                500,
-                                exception.message.toString()
-                            )
-                        )
+            } catch (exception: Exception) {
+                responseLiveData.postValue(
+                    ApiResponse.error(
+                        ApiResponse.ApiError(404, exception.message.toString())
                     )
-                }
+                )
             }
         }
     }

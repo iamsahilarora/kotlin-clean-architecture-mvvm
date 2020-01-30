@@ -50,6 +50,9 @@ android {
     dataBinding {
         enabled = true
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
     dexOptions {
         javaMaxHeapSize "4g"
 

@@ -7,20 +7,20 @@ import com.sa.kotlin_cleanarch.sample.model.bean.responses.ContactListResponse
 import com.sa.kotlin_cleanarch.sample.model.remote.ApiResponse
 import com.sa.kotlin_cleanarch.sample.model.repo.ContactRepository
 
+
 class SplashViewModel constructor(private val contactRepository: ContactRepository) :
     BaseViewModel() {
 
-    private val commentListResponse by lazy {
+    private val _commentListResponse by lazy {
         MutableLiveData<ApiResponse<ContactListResponse>>()
     }
 
+    /*** LiveData that view observing
+     * you can modify this as MediatorLiveData if you want to modify data model coming from api*/
+    val commentListResponse: LiveData<ApiResponse<ContactListResponse>> = _commentListResponse
+
     fun getContactList(getContactListRequest: GetContactListRequest) {
-        contactRepository.getCommentList(getContactListRequest, commentListResponse)
-    }
-
-
-    fun getCommentListResponse(): LiveData<ApiResponse<ContactListResponse>> {
-        return commentListResponse
+        contactRepository.getCommentListFromNetwork(getContactListRequest, _commentListResponse)
     }
 
     fun createContactRequest(): GetContactListRequest {

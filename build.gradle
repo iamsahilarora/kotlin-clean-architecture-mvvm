@@ -32,9 +32,10 @@ buildscript {
         roomVersion = '2.0.0-rc01'
 
         /* Network Dependencies */
-        okHttpLogVersion = '3.12.1'
-        retrofitVersion = '2.5.0'
-        gsonVersion = '2.8.2'
+        /* Network Dependencies */
+        okHttpLogVersion = '4.3.0'
+        retrofitVersion = '2.7.1'
+        gsonVersion = '2.8.6'
         kotlinCoroutineAdapterFactoryVersion = "0.9.2"
 
         /* UI Dependencies */
@@ -111,7 +112,7 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:3.5.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
